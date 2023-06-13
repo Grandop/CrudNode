@@ -40,9 +40,14 @@ app.put("/personagem/:id", (req, res) => {
 
   const personagem = data.find((item) => item.id == id);
 
+  if(!name && !gender) {
+    return res.status(404).json({error: errorsMessage.putError });
+  }
+
   if (!personagem) {
     return res.status(404).json({error: errorsMessage.defaultError });
   } 
+
   personagem.name = name;
   personagem.gender = gender;
 

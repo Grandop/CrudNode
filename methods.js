@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 let data = require('./data/data.json');
+let errorsMessage = require('./errors/error');
 
 app.use(express.json());
 
@@ -16,7 +17,7 @@ app.get("/personagem/:id", (req, res) => {
   if (personagemId) {
     res.json(personagemId);
   } else {
-    res.status(404).json({ error: "Personagem não encontrado" });
+    res.status(404).json({ error: errorsMessage.defaultError });
   }
 });
 
@@ -24,7 +25,7 @@ app.post('/personagem', (req, res) => {
   const { id, name, gender } = req.body;
 
   if (!id || !name || !gender) {
-    res.status(400).json({ error: "Dados incompletos. Certifique-se de enviar o ID, nome e gênero." });
+    res.status(400).json({ error: errorsMessage.postError });
   } else {
     data.push({ id, name, gender });
     res.status(201).json({ id, name, gender });
@@ -40,7 +41,7 @@ app.put("/personagem/:id", (req, res) => {
   const personagem = data.find((item) => item.id == id);
 
   if (!personagem) {
-    return res.status(404).json({error: "Personagem não encontrado"});
+    return res.status(404).json({error: errorsMessage.defaultError });
   } 
   personagem.name = name;
   personagem.gender = gender;
@@ -54,7 +55,7 @@ app.delete("/personagem/:id", (req, res) => {
   const personagemIndex = data.findIndex((index) => index.id == id);
 
   if (personagemIndex < 0) {
-      res.status(404).json({error: "Esse personagem não pode ser deletado"});
+      res.status(404).json({error: errorsMessage.deleteError });
   } else {
       data = personagemFilter;
       res.json(data);

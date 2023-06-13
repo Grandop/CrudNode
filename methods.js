@@ -24,7 +24,9 @@ app.get("/personagem/:id", (req, res) => {
 app.post('/personagem', (req, res) => {
   const { id, name, gender } = req.body;
 
-  if (!id || !name || !gender) {
+  const isDataFalse = !id || !name || !gender
+
+  if (isDataFalse) {
     res.status(404).json({ error: errorsMessage.postError });
   } else {
     data.push({ id, name, gender });
@@ -37,10 +39,9 @@ app.put("/personagem/:id", (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
   const { gender } = req.body;
-
   const personagem = data.find((item) => item.id == id);
 
-  if(!name && !gender) {
+  if (!name && !gender) {
     return res.status(404).json({error: errorsMessage.putError });
   }
 
@@ -58,7 +59,9 @@ app.delete("/personagem/:id", (req, res) => {
   const { id } = req.params;
   const personagemIndex = data.findIndex((index) => index.id == id);
 
-  if (personagemIndex < 0) {
+  const isIndexLessThanZero = personagemIndex < 0
+
+  if (isIndexLessThanZero) {
     res.status(404).json({ error: errorsMessage.deleteError });
   } else {
     data.splice(personagemIndex, 1);

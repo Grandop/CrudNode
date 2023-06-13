@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 let data = require('./data/data.json');
-let errorsMessage = require('./errors/error');
+const errorsMessage = require('./errors/error');
 
 app.use(express.json());
 

@@ -51,16 +51,16 @@ app.put("/personagem/:id", (req, res) => {
 
 app.delete("/personagem/:id", (req, res) => {
   const { id } = req.params;
-  const personagemFilter = data.filter((item) => item.id != id);
   const personagemIndex = data.findIndex((index) => index.id == id);
 
   if (personagemIndex < 0) {
-      res.status(404).json({error: errorsMessage.deleteError });
+    res.status(404).json({ error: errorsMessage.deleteError });
   } else {
-      data = personagemFilter;
-      res.json(data);
+    data.splice(personagemIndex, 1);
+    res.json(data);
   }
 });
+
 
 app.listen(PORT, () => {
     console.log('Sevidor Iniciado');

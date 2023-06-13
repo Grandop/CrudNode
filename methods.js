@@ -15,7 +15,7 @@ app.get("/personagem/:id", (req, res) => {
   const personagemId = data.find((item) => item.id == id);
 
   if (personagemId) {
-    res.json(personagemId);
+    res.status(200).json(personagemId);
   } else {
     res.status(404).json({ error: errorsMessage.defaultError });
   }
@@ -25,10 +25,10 @@ app.post('/personagem', (req, res) => {
   const { id, name, gender } = req.body;
 
   if (!id || !name || !gender) {
-    res.status(400).json({ error: errorsMessage.postError });
+    res.status(404).json({ error: errorsMessage.postError });
   } else {
     data.push({ id, name, gender });
-    res.status(201).json({ id, name, gender });
+    res.status(200).json({ id, name, gender });
   }
 });
 
@@ -46,7 +46,7 @@ app.put("/personagem/:id", (req, res) => {
   personagem.name = name;
   personagem.gender = gender;
 
-  res.json(personagem);
+  res.status(200).json(personagem);
 });
 
 app.delete("/personagem/:id", (req, res) => {
@@ -57,7 +57,7 @@ app.delete("/personagem/:id", (req, res) => {
     res.status(404).json({ error: errorsMessage.deleteError });
   } else {
     data.splice(personagemIndex, 1);
-    res.json(data);
+    res.status(200).json(data);
   }
 });
 

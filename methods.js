@@ -48,8 +48,21 @@ app.put("/personagem/:id", (req, res) => {
     return res.status(404).json({error: errorsMessage.defaultError });
   } 
 
-  personagem.name = name;
-  personagem.gender = gender;
+  personagem.name = name || personagem.name;
+  personagem.gender = gender || personagem.gender;
+
+  // if (name) {
+  //   personagem.name = name
+  // } else {
+  //   personagem.name = personagem.name
+  // }
+
+  // if (gender) {
+  //   personagem.gender = gender
+  // } else {
+  //   personagem.gender = personagem.gender
+  // }
+
 
   res.status(200).json(personagem);
 });
